@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DB Settings</title>
+    <link rel="stylesheet" href="dbSettings.css">
+</head>
+<body>
+<div class="container">
+    <h1>Database Settings</h1>
+
+    <div class="form">
+        <input id="dbUrl" placeholder="Database URL (e.g., jdbc:mysql://localhost:3306)">
+        <input id="dbName" placeholder="Database Name">
+        <input id="dbUser" placeholder="Username">
+        <input id="dbPass" type="password" placeholder="Password">
+    </div>
+
+    <div class="buttons">
+        <button id="saveBtn">Save Settings</button>
+        <button id="testBtn">Test Connection</button>
+    </div>
+
+    <textarea id="output" readonly placeholder="Status..."></textarea>
+</div>
+
+<script src="dbSettings.js"></script>
+</body>
+</html>

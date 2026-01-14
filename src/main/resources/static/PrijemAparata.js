@@ -1,0 +1,130 @@
+const idInput = document.getElementById("idInput");
+const firstNameInput = document.getElementById("firstNameInput");
+const lastNameInput = document.getElementById("lastNameInput");
+const phoneInput = document.getElementById("phoneInput");
+const dateInput = document.getElementById("dateInput");
+const problemInput = document.getElementById("problemInput");
+const output = document.getElementById("output");
+
+const saveBtn = document.getElementById("saveBtn");
+const updateBtn = document.getElementById("updateBtn");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const addBtn = document.getElementById("addBtn");
+
+let customers = [];
+let index = 0;
+
+// Load all customers
+async function loadCustomers() {
+  try {
+    const res = await fetch("/customers");
+    customers = await res.json();
+    if (customers.length > 0) {
+      index = customers.length - 1;   // last added
+      showCustomer(index);
+    }
+
+  } catch {
+    output.value = "Error loading customers.";
+  }
+}
+
+function showCustomer(i) {
+  const c = customers[i];
+  if (!c) return;
+  idInput.value = c.id || "";
+  firstNameInput.value = c.firstName || "";
+  lastNameInput.value = c.lastName || "";
+  phoneInput.value = c.phoneNumber || "";
+  dateInput.value = c.dateCreated || "";
+  problemInput.value = c.problemDescription || "";
+}
+
+// Add new customer
+addBtn.addEventListener("click", () => {
+  idInput.value = "";
+  firstNameInput.value = "";
+  lastNameInput.value = "";
+  phoneInput.value = "";
+  problemInput.value = "";
+
+  // Set today as default date
+  const today = new Date().toISOString().split("T")[0];
+  dateInput.value = today;
+
+  output.value = "Ready to add new customer.";
+});
+
+
+// Save new customer
+saveBtn.addEventListener("click", async () => {
+  const customer = {
+    firstName: firstNameInput.value,
+    lastName: lastNameInput.value,
+    phoneNumber: phoneInput.value,
+    dateCreated: dateInput.value,
+    problemDescription: problemInput.value
+  };
+
+  try {
+    const res = await fetch("/customers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(customer)
+    });
+    const data = await res.json();
+    output.value = "Saved:\n" + JSON.stringify(data, null, 2);
+    loadCustomers();
+  } catch {
+    output.value = "Error saving customer.";
+  }
+});
+
+// Update customer
+updateBtn.addEventListener("click", async () => {
+  const id = idInput.value;
+  if (!id) {
+    output.value = "Enter ID to update.";
+    return;
+  }
+
+  const customer = {
+    firstName: firstNameInput.value,
+    lastName: lastNameInput.value,
+    phoneNumber: phoneInput.value,
+    dateCreated: dateInput.value,
+    problemDescription: problemInput.value
+  };
+
+  try {
+    const res = await fetch(`/customers/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(customer)
+    });
+    const data = await res.json();
+    output.value = "Updated:\n" + JSON.stringify(data, null, 2);
+    loadCustomers();
+  } catch {
+    output.value = "Error updating customer.";
+  }
+});
+
+// Previous
+prevBtn.addEventListener("click", () => {
+  if (index > 0) {
+    index--;
+    showCustomer(index);
+  }
+});
+
+// Next
+nextBtn.addEventListener("click", () => {
+  if (index < customers.length - 1) {
+    index++;
+    showCustomer(index);
+  }
+});
+
+loadCustomers();
