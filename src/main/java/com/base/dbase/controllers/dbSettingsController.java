@@ -22,9 +22,9 @@ public class dbSettingsController {
     @ResponseBody
     public String saveSettings(@RequestBody Map<String, String> body) throws IOException {
         String appName = body.get("name");
-        String url = body.get("url");
-        String user = body.get("user");
-        String pass = body.get("password");
+        String url = body.get("primary.url");
+        String user = body.get("primary.user");
+        String pass = body.get("primary.password");
 
         List<String> lines = Files.readAllLines(Path.of(FILE_PATH));
         List<String> newLines = new ArrayList<>();
@@ -32,12 +32,12 @@ public class dbSettingsController {
         for (String line : lines) {
             if (line.startsWith("spring.application.name="))
                 newLines.add("spring.application.name=" + appName);
-            else if (line.startsWith("spring.datasource.url="))
-                newLines.add("spring.datasource.url=" + url);
-            else if (line.startsWith("spring.datasource.username="))
-                newLines.add("spring.datasource.username=" + user);
-            else if (line.startsWith("spring.datasource.password="))
-                newLines.add("spring.datasource.password=" + pass);
+            else if (line.startsWith("spring.datasource.primary.url="))
+                newLines.add("spring.datasource.primary.url=" + url);
+            else if (line.startsWith("spring.datasource.primary.username="))
+                newLines.add("spring.datasource.primary.username=" + user);
+            else if (line.startsWith("spring.datasource.primary.password="))
+                newLines.add("spring.datasource.primary.password=" + pass);
             else
                 newLines.add(line);
         }
