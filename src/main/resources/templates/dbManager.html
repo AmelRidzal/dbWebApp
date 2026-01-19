@@ -2,25 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>User Manager</title>
+    <title>dbManager</title>
     <link rel="stylesheet" href="dbManager.css" />
 </head>
 <body>
 <div class="container">
     <h1>User Management</h1>
 
-    <div class="form">
-        <input id="idInput" placeholder="ID" />
-        <input id="firstNameInput" placeholder="First Name" />
-        <input id="lastNameInput" placeholder="Last Name" />
-        <input id="phoneInput" placeholder="Phone Number" />
-    </div>
-
-    <div class="buttons">
-        <button id="addBtn">Add User</button>
-        <button id="findBtn">Find User by ID</button>
-        <button id="deleteBtn">Delete User by ID</button>
-        <button id="showBtn">Show All Users</button>
+    <div class="input-row">
+        <textarea id="input" placeholder="Enter query here..."></textarea>
+        <button id="sendBtn">Send</button>
     </div>
 
     <textarea id="output" readonly placeholder="Result will appear here..."></textarea>

@@ -5,6 +5,7 @@ import com.base.dbase.services.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/customers")
@@ -47,4 +48,9 @@ public class CustomerController {
     ) {
         return customerService.updateCustomer(id, customer);
     }
+    @PostMapping("/query")
+    public Object runQuery(@RequestBody Map<String,String> body) {
+        return customerService.runQuery(body.get("query"));
+    }
+
 }

@@ -2,6 +2,8 @@ package com.base.dbase.services;
 
 import com.base.dbase.model.Customer;
 import com.base.dbase.repository.CustomerRepo;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +12,11 @@ import java.util.List;
 public class CustomerService {
 
     private final CustomerRepo repo;
+    private final EntityManager entityManager;
 
-    public CustomerService(CustomerRepo repo) {
+    public CustomerService(CustomerRepo repo, EntityManager entityManager) {
         this.repo = repo;
+        this.entityManager = entityManager;
     }
 
     public List<Customer> getAllCustomers() {
@@ -35,7 +39,6 @@ public class CustomerService {
         return false;
     }
 
-    // UPDATE customer
     public Customer updateCustomer(Long id, Customer newData) {
         return repo.findById(id).map(existing -> {
             existing.setFirstName(newData.getFirstName());
@@ -45,5 +48,14 @@ public class CustomerService {
             existing.setProblemDescription(newData.getProblemDescription());
             return repo.save(existing);
         }).orElse(null);
+    }
+
+    public Object runQuery(String queryText) {
+        try {
+            Query query = entityManager.createNativeQuery(queryText);
+            return query.getResultList();
+        } catch (Exception e) {
+            return "Query error: " + e.getMessage();
+        }
     }
 }
