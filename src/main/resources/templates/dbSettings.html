@@ -10,8 +10,12 @@
     <h1>Database Settings</h1>
 
     <div class="form">
-        <input id="dbUrl" placeholder="Database URL (e.g., jdbc:mysql://localhost:3306)">
-        <input id="dbName" placeholder="Database Name">
+        <select id="dbTarget">
+            <option value="primary">Primary Database</option>
+            <option value="secondary">Secondary (Backup) Database</option>
+        </select>
+
+        <input id="dbUrl" placeholder="Database URL (e.g., jdbc:postgresql://localhost:5432/db)">
         <input id="dbUser" placeholder="Username">
         <input id="dbPass" type="password" placeholder="Password">
     </div>

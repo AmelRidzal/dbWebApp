@@ -20,20 +20,27 @@ public class BackupService {
     private JdbcTemplate secondaryJdbc;
 
     public void syncUsers() {
-        List<Map<String, Object>> users =
-                primaryJdbc.queryForList("SELECT * FROM users");
+        List<Map<String, Object>> customers =
+                primaryJdbc.queryForList("SELECT * FROM customers");
 
-        for (Map<String, Object> u : users) {
+        for (Map<String, Object> c : customers) {
             secondaryJdbc.update("""
-                INSERT INTO users(id, name, email)
-                VALUES (?, ?, ?)
+                INSERT INTO customers
+                (id, first_name, last_name, phone_number, date_created, problem_description)
+                VALUES (?, ?, ?, ?, ?, ?)
                 ON CONFLICT (id) DO UPDATE SET
-                    name = EXCLUDED.name,
-                    email = EXCLUDED.email
+                    first_name = EXCLUDED.first_name,
+                    last_name = EXCLUDED.last_name,
+                    phone_number = EXCLUDED.phone_number,
+                    date_created = EXCLUDED.date_created,
+                    problem_description = EXCLUDED.problem_description
             """,
-                    u.get("id"),
-                    u.get("name"),
-                    u.get("email")
+                    c.get("id"),
+                    c.get("first_name"),
+                    c.get("last_name"),
+                    c.get("phone_number"),
+                    c.get("date_created"),
+                    c.get("problem_description")
             );
         }
     }

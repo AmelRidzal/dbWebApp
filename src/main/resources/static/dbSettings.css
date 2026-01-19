@@ -57,3 +57,29 @@ button:hover {
     height: 400px;
     margin-top: 10px;
 }
+
+select {
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+    cursor: pointer;
+}
+
+select:hover {
+    border-color: #0077cc;
+}
+
+select:focus {
+    outline: none;
+    border-color: #0077cc;
+    box-shadow: 0 0 0 2px rgba(0, 119, 204, 0.2);
+}
+
+option {
+    padding: 10px;
+    font-size: 16px;
+}

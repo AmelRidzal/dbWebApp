@@ -1,7 +1,7 @@
 const dbUrl = document.getElementById("dbUrl");
-const dbName = document.getElementById("dbName");
 const dbUser = document.getElementById("dbUser");
 const dbPass = document.getElementById("dbPass");
+const dbTarget = document.getElementById("dbTarget");
 const output = document.getElementById("output");
 
 const saveBtn = document.getElementById("saveBtn");
@@ -10,13 +10,13 @@ const testBtn = document.getElementById("testBtn");
 // Save DB settings
 saveBtn.addEventListener("click", async () => {
     const settings = {
+        target: dbTarget.value,   // "primary" or "secondary"
         url: dbUrl.value.trim(),
-        name: dbName.value.trim(),
         user: dbUser.value.trim(),
         password: dbPass.value.trim()
     };
 
-    if (!settings.url || !settings.name || !settings.user) {
+    if (!settings.url || !settings.user) {
         output.value = "⚠️ Fill in all fields except password if empty.";
         return;
     }
@@ -39,7 +39,6 @@ saveBtn.addEventListener("click", async () => {
 testBtn.addEventListener("click", async () => {
     const settings = {
         url: dbUrl.value.trim(),
-        name: dbName.value.trim(),
         user: dbUser.value.trim(),
         password: dbPass.value.trim()
     };
