@@ -29,11 +29,13 @@ public class CustomerController {
         return customerService.addCustomer(customer);
     }
 
+    // GET request to get customers by id
     @GetMapping("/{id}")
     public Customer getById(@PathVariable Long id) {
         return customerService.getCustomerById(id);
     }
 
+    // DELETE request to delete customers by id
     @DeleteMapping("/{id}")
     public String deleteById(@PathVariable Long id) {
         return customerService.deleteCustomer(id)
@@ -41,6 +43,7 @@ public class CustomerController {
                 : "Customer not found";
     }
 
+    // PUT request to update a customer
     @PutMapping("/{id}")
     public Customer updateCustomer(
             @PathVariable Long id,
@@ -48,6 +51,8 @@ public class CustomerController {
     ) {
         return customerService.updateCustomer(id, customer);
     }
+
+    // POST request to send a query
     @PostMapping("/query")
     public Object runQuery(@RequestBody Map<String,String> body) {
         return customerService.runQuery(body.get("query"));

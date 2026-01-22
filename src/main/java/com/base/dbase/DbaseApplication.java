@@ -6,9 +6,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @SpringBootApplication
-public class DbaseApplication {
+public class DbaseApplication  {
 
-	public static void main(String[] args) {
+    static void main(String[] args) {
 		SpringApplication.run(DbaseApplication.class, args);
 	}
 

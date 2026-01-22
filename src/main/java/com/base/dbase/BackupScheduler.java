@@ -11,8 +11,8 @@ public class BackupScheduler {
     @Autowired
     private BackupService backupService;
 
-    // Every 5 minutes
-    @Scheduled(fixedRate = 300000)
+    // Every 1 minutes
+    @Scheduled(fixedRate = 60000)
     public void backupTask() {
         backupService.syncUsers();
         System.out.println("Backup sync done");

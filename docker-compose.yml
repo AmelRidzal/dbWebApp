@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: dbwebapp-postgres
+    environment:
+      POSTGRES_DB: dbase
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${PRIMARY_DB_PASSWORD:-admin}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d dbase"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: dbwebapp
+    environment:
+      # Primary DB (local PostgreSQL)
+      SPRING_DATASOURCE_PRIMARY_JDBC_URL: jdbc:postgresql://postgres:5432/dbase
+      SPRING_DATASOURCE_PRIMARY_USERNAME: postgres
+      SPRING_DATASOURCE_PRIMARY_PASSWORD: ${PRIMARY_DB_PASSWORD:-admin}
+
+      # Secondary DB (Neon backup)
+      SPRING_DATASOURCE_SECONDARY_JDBC_URL: ${SECONDARY_DB_URL}
+      SPRING_DATASOURCE_SECONDARY_USERNAME: ${SECONDARY_DB_USER}
+      SPRING_DATASOURCE_SECONDARY_PASSWORD: ${SECONDARY_DB_PASSWORD}
+
+      # JPA settings
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
