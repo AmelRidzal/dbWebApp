@@ -1,6 +1,5 @@
 const idInput = document.getElementById("idInput");
-const firstNameInput = document.getElementById("firstNameInput");
-const lastNameInput = document.getElementById("lastNameInput");
+const nameInput = document.getElementById("nameInput");
 const phoneInput = document.getElementById("phoneInput");
 const dateInput = document.getElementById("dateInput");
 const problemInput = document.getElementById("problemInput");
@@ -21,7 +20,7 @@ async function loadCustomers() {
     const res = await fetch("/customers");
     customers = await res.json();
     if (customers.length > 0) {
-      index = customers.length - 1;   // last added
+      index = customers.length - 1;
       showCustomer(index);
     }
 
@@ -34,8 +33,7 @@ function showCustomer(i) {
   const c = customers[i];
   if (!c) return;
   idInput.value = c.id || "";
-  firstNameInput.value = c.firstName || "";
-  lastNameInput.value = c.lastName || "";
+  nameInput.value = c.name || "";
   phoneInput.value = c.phoneNumber || "";
   dateInput.value = c.dateCreated || "";
   problemInput.value = c.problemDescription || "";
@@ -44,8 +42,7 @@ function showCustomer(i) {
 // Add new customer
 addBtn.addEventListener("click", () => {
   idInput.value = "";
-  firstNameInput.value = "";
-  lastNameInput.value = "";
+  nameInput.value = "";
   phoneInput.value = "";
   problemInput.value = "";
 
@@ -60,8 +57,7 @@ addBtn.addEventListener("click", () => {
 // Save new customer
 saveBtn.addEventListener("click", async () => {
   const customer = {
-    firstName: firstNameInput.value,
-    lastName: lastNameInput.value,
+    name: nameInput.value,
     phoneNumber: phoneInput.value,
     dateCreated: dateInput.value,
     problemDescription: problemInput.value
@@ -90,8 +86,7 @@ updateBtn.addEventListener("click", async () => {
   }
 
   const customer = {
-    firstName: firstNameInput.value,
-    lastName: lastNameInput.value,
+    name: nameInput.value,
     phoneNumber: phoneInput.value,
     dateCreated: dateInput.value,
     problemDescription: problemInput.value

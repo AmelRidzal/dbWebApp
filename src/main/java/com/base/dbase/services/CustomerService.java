@@ -41,8 +41,7 @@ public class CustomerService {
 
     public Customer updateCustomer(Long id, Customer newData) {
         return repo.findById(id).map(existing -> {
-            existing.setFirstName(newData.getFirstName());
-            existing.setLastName(newData.getLastName());
+            existing.setName(newData.getName());
             existing.setPhoneNumber(newData.getPhoneNumber());
             existing.setDateCreated(newData.getDateCreated());
             existing.setProblemDescription(newData.getProblemDescription());

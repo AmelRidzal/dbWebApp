@@ -14,10 +14,7 @@ public class Customer {
     private Long id;
 
     @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
+    private String name;
 
     @Column(nullable = false)
     private String phoneNumber;
@@ -31,10 +28,9 @@ public class Customer {
     // --- Constructors ---
     public Customer() {}
 
-    public Customer(String firstName, String lastName, String phoneNumber,
+    public Customer(String name, String phoneNumber,
                     LocalDate dateCreated, String problemDescription) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.phoneNumber = phoneNumber;
         this.dateCreated = dateCreated;
         this.problemDescription = problemDescription;
@@ -44,11 +40,8 @@ public class Customer {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public String getPhoneNumber() { return phoneNumber; }
     public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
@@ -65,8 +58,7 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", dateCreated=" + dateCreated +
                 ", problemDescription='" + problemDescription + '\'' +

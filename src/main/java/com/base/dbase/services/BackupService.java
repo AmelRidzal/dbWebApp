@@ -26,18 +26,16 @@ public class BackupService {
         for (Map<String, Object> c : customers) {
             secondaryJdbc.update("""
                 INSERT INTO customers
-                (id, first_name, last_name, phone_number, date_created, problem_description)
-                VALUES (?, ?, ?, ?, ?, ?)
+                (id, name, phone_number, date_created, problem_description)
+                VALUES (?, ?, ?, ?, ?)
                 ON CONFLICT (id) DO UPDATE SET
-                    first_name = EXCLUDED.first_name,
-                    last_name = EXCLUDED.last_name,
+                    name = EXCLUDED.name,
                     phone_number = EXCLUDED.phone_number,
                     date_created = EXCLUDED.date_created,
                     problem_description = EXCLUDED.problem_description
             """,
                     c.get("id"),
-                    c.get("first_name"),
-                    c.get("last_name"),
+                    c.get("name"),
                     c.get("phone_number"),
                     c.get("date_created"),
                     c.get("problem_description")
