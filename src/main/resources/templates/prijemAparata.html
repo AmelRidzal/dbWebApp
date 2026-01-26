@@ -18,6 +18,7 @@
     </div>
 
     <div class="buttons">
+        <button type="button" onclick="printPrijem()">Print</button>
         <button id="addBtn">Add Customer</button>
         <button id="saveBtn">Save Customer</button>
         <button id="updateBtn">Update Customer</button>
@@ -27,6 +28,22 @@
 
     <textarea id="output" readonly placeholder="Status..."></textarea>
 </div>
+
+<div id="printSection" style="display: none;">
+    <h2>PRIJEM APARATA</h2>
+    <p>-----------------------------</p>
+    <p>Ime: <strong id="p_name"></strong></p>
+    <p>Telefon: <strong id="p_phone"></strong></p>
+    <p>Datum: <strong id="p_date"></strong></p>
+    <p>-----------------------------</p>
+    <p>Problem:</p>
+    <p id="p_problem"></p>
+    <p>-----------------------------</p>
+    <p>Potpis klijenta:</p>
+    <br>
+    <p>___________________________</p>
+</div>
+
 
 <script src="prijemAparata.js"></script>
 </body>
