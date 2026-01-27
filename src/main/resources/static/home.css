@@ -38,3 +38,22 @@ button {
 button:hover {
   background-color: #125a9c;
 }
+
+.lang {
+    position: fixed;
+    top: 10px;
+    right: 15px;
+    font-size: 14px;
+    z-index: 1000;
+}
+
+.lang a {
+    text-decoration: none;
+    color: #0077cc;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.lang a:hover {
+    text-decoration: underline;
+}
