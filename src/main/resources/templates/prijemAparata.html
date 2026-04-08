@@ -10,11 +10,26 @@
     <h1 th:text="#{title.prijem}">Prijem Aparata</h1>
 
     <div class="form">
-        <input id="idInput" th:placeholder="#{label.id}">
-        <input id="nameInput" th:placeholder="#{label.name}">
-        <input id="phoneInput" th:placeholder="#{label.phone}">
-        <input id="dateInput" type="date">
-        <textarea id="problemInput" th:placeholder="#{label.problem}"></textarea>
+        <div class="field-group">
+            <label for="idInput" th:text="#{label.id}">ID</label>
+            <input id="idInput" th:placeholder="#{label.id}">
+        </div>
+        <div class="field-group">
+            <label for="nameInput" th:text="#{label.name}">Name</label>
+            <input id="nameInput" th:placeholder="#{label.name}">
+        </div>
+        <div class="field-group">
+            <label for="phoneInput" th:text="#{label.phone}">Phone</label>
+            <input id="phoneInput" th:placeholder="#{label.phone}">
+        </div>
+        <div class="field-group">
+            <label for="dateInput" th:text="#{label.date}">Date</label>
+            <input id="dateInput" type="date">
+        </div>
+        <div class="field-group field-group--full">
+            <label for="problemInput" th:text="#{label.problem}">Problem</label>
+            <textarea id="problemInput" th:placeholder="#{label.problem}"></textarea>
+        </div>
     </div>
 
     <div class="buttons">
@@ -26,7 +41,10 @@
         <button id="nextBtn" th:text="#{btn.next}">Next ➡</button>
     </div>
 
-    <textarea id="output" readonly th:placeholder="#{label.status}"></textarea>
+    <div class="field-group">
+        <label for="output" th:text="#{label.status}">Status</label>
+        <textarea id="output" readonly th:placeholder="#{label.status}"></textarea>
+    </div>
 </div>
 
 <div id="printSection" style="display: none;">

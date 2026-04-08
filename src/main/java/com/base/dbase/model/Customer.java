@@ -16,7 +16,7 @@ public class Customer {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "date_created")

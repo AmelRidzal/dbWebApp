@@ -126,26 +126,20 @@ loadCustomers();
 
 
 function printPrijem() {
-    // Read values from EXISTING inputs
-    const name = nameInput.value;
-    const phone = phoneInput.value;
-    const date = dateInput.value;
-    const problem = problemInput.value;
+    const data = {
+        name: nameInput.value,
+        phone: phoneInput.value,
+        date: dateInput.value,
+        problem: problemInput.value
+    };
 
-    // Fill print section
-    document.getElementById("p_name").innerText = name;
-    document.getElementById("p_phone").innerText = phone;
-    document.getElementById("p_date").innerText = date;
-    document.getElementById("p_problem").innerText = problem;
-
-    // Print only the section
-    const printContent = document.getElementById("printSection").innerHTML;
-    const originalContent = document.body.innerHTML;
-
-    document.body.innerHTML = printContent;
-    window.print();
-    document.body.innerHTML = originalContent;
-
-    location.reload();
+    fetch("/print", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.text())
+    .then(msg => output.value = msg)
+    .catch(() => output.value = "Print error.");
 }
 
