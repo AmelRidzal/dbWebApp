@@ -6,17 +6,22 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomerService {
 
     private final CustomerRepo repo;
     private final EntityManager entityManager;
+    private final BackupService backupService;   // ← add this
 
-    public CustomerService(CustomerRepo repo, EntityManager entityManager) {
+    public CustomerService(CustomerRepo repo, EntityManager entityManager,
+                           BackupService backupService) {
         this.repo = repo;
         this.entityManager = entityManager;
+        this.backupService = backupService;       // ← add this
     }
 
     public List<Customer> getAllCustomers() {
@@ -24,7 +29,9 @@ public class CustomerService {
     }
 
     public Customer addCustomer(Customer customer) {
-        return repo.save(customer);
+        Customer saved = repo.save(customer);
+        backupService.bufferChange(toMap(saved));  // ← buffer the insert
+        return saved;
     }
 
     public Customer getCustomerById(Long id) {
@@ -34,6 +41,7 @@ public class CustomerService {
     public boolean deleteCustomer(Long id) {
         if (repo.existsById(id)) {
             repo.deleteById(id);
+            // ← NO buffer call here — deletes are not backed up
             return true;
         }
         return false;
@@ -45,7 +53,9 @@ public class CustomerService {
             existing.setPhoneNumber(newData.getPhoneNumber());
             existing.setDateCreated(newData.getDateCreated());
             existing.setProblemDescription(newData.getProblemDescription());
-            return repo.save(existing);
+            Customer saved = repo.save(existing);
+            backupService.bufferChange(toMap(saved));  // ← buffer the update
+            return saved;
         }).orElse(null);
     }
 
@@ -56,5 +66,16 @@ public class CustomerService {
         } catch (Exception e) {
             return "Query error: " + e.getMessage();
         }
+    }
+
+    // Helper to convert Customer entity → Map for the buffer
+    private Map<String, Object> toMap(Customer c) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", c.getId());
+        map.put("name", c.getName());
+        map.put("phone_number", c.getPhoneNumber());
+        map.put("date_created", c.getDateCreated());
+        map.put("problem_description", c.getProblemDescription());
+        return map;
     }
 }
